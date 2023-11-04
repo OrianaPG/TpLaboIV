@@ -6,7 +6,7 @@ fetch(url)
     .then(respuesta => respuesta.json())
     .then(data => {
         let lenguajes = data.categories.map(lenguajes =>
-            `<button class="btn btn-primary">${lenguajes.name}</button>`
+            `<button class="btn btn-primary lenguajes" name="lenguajes">${lenguajes.name.toUpperCase()}</button>`
         );
         containerlenguajes.innerHTML = lenguajes.join(" ");
     })
