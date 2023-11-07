@@ -60,8 +60,24 @@ function obtenerUnaPregunta(){
     console.log(pregunta.question);
     ciclo++;
 }
+
+function hacerPromesa(){
+    return new Promise((obtenerPreguntas) => {
+        setTimeout(() => {
+            obtenerUnaPregunta();
+        }, 500);
+    });
+};
+
+obtenerPreguntas()
+.then(() => hacerPromesa());
+
+
+
+/*
 obtenerPreguntas(ciclo);
 
 setTimeout(() => {
     obtenerUnaPregunta();
 }, 500);
+*/
