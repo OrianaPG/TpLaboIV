@@ -1,6 +1,6 @@
-category = "javascript"
-nivel = "facil"
-cantidadPreguntas = 5
+category = localStorage.getItem("lenguaje");
+nivel = localStorage.getItem("dificultad");
+cantidadPreguntas = localStorage.getItem("cantidadPreguntas")
 let preguntas;
 
 ciclo = 0;
