@@ -1,23 +1,33 @@
-let containerlenguajes = document.getElementById("containerlenguajes");
+localStorage.clear()
 
 const url = 'https://corsproxy.io/?' + encodeURIComponent('https://www.preguntapi.dev/api/categories');
 
 function guardarLenguaje(name) {
+    // Chequea que no haya un lenguaje ya guardado
+    let lenguajeGuardado = localStorage.getItem("lenguaje");
     
-    lenguaje = name;
-    old = localStorage.getItem("lenguaje");
-    botonOld = document.getElementById(old);
-    botonOld.classList.remove("btn-info");
-    //botonOld.classList.remove("btn-primary");
-    botonOld.classList.add("btn-primary");
-
-    localStorage.setItem("lenguaje", lenguaje);
-    boton = document.getElementById(lenguaje);
-    boton.classList.remove("btn-info");
-    boton.classList.remove("btn-primary");
-    boton.classList.add("btn-info");
+    // Si lo hay, lo devuelve a sus propiedades normales
+    if (lenguajeGuardado)
+    {
+        let botonGuardado = document.getElementById(lenguajeGuardado);
+        botonGuardado.classList.remove("btn-info");
+        botonGuardado.classList.add("btn-primary");
     }
 
+    // Guarda el lenguaje seleccionado
+    let lenguaje = name;
+
+    localStorage.setItem("lenguaje", lenguaje);
+
+    // Agrega nuevas propiedades
+    boton = document.getElementById(lenguaje);
+    boton.classList.remove("btn-primary");
+    boton.classList.add("btn-info");
+    boton.classList.add("text-white");
+    boton.classList.add("old");
+}
+
+let containerlenguajes = document.getElementById("containerlenguajes");
 
 fetch(url)
     .then(respuesta => respuesta.json())
@@ -27,12 +37,10 @@ fetch(url)
         );
         containerlenguajes.innerHTML = lenguajes.join(" ");
     })
-    .catch(error => console.log("ERROR FATAL", error));
-
-
-
+    .catch(error => console.log("ERROR FATAL:", error));
 
 const empezarQuizButton = document.getElementById("empezarQuiz");
+
 empezarQuizButton.addEventListener("click", () => {
     // Guarda variables elegidas por el usuario
     let dificultad = document.getElementById("dificultad").value;
