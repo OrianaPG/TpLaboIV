@@ -1,4 +1,5 @@
 category = localStorage.getItem("lenguaje");
+//category = "javascript";
 nivel = localStorage.getItem("dificultad");
 cantidadPreguntas = localStorage.getItem("cantidadPreguntas")
 let preguntas;
@@ -72,7 +73,7 @@ function hacerPromesa() {
     return new Promise((obtenerPreguntas) => {
         setTimeout(() => {
             obtenerUnaPregunta();
-        }, 500);
+        }, 1500);
     });
 };
 
