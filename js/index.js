@@ -42,13 +42,23 @@ fetch(url)
 const empezarQuizButton = document.getElementById("empezarQuiz");
 
 empezarQuizButton.addEventListener("click", () => {
-    // Guarda variables elegidas por el usuario
-    let dificultad = document.getElementById("dificultad").value;
-    let cantidadPreguntas = document.getElementById("cantidadDePreguntas").value;
+    // Chequea que se haya seleccionado un lenguaje
+    let lenguajeGuardado = localStorage.getItem("lenguaje");
 
-    localStorage.setItem("dificultad", dificultad);
-    localStorage.setItem("cantidadPreguntas", cantidadPreguntas);
-
-    // Va a la pantalla de preguntas
-    window.location.href = "./quiz.html";
+    if (lenguajeGuardado) {
+        // Guarda variables elegidas por el usuario
+        let dificultad = document.getElementById("dificultad").value;
+        let cantidadPreguntas = document.getElementById("cantidadDePreguntas").value;
+    
+        localStorage.setItem("dificultad", dificultad);
+        localStorage.setItem("cantidadPreguntas", cantidadPreguntas);
+    
+        // Va a la pantalla de preguntas
+        window.location.href = "./quiz.html";
+    }
+    else {
+        // Muestra que falta seleccionar lenguaje
+        let faltaCargarLenguaje = document.getElementById("faltaCargarLenguaje");
+        faltaCargarLenguaje.classList.remove("ocultar");
+    }
 });
