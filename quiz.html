@@ -15,40 +15,30 @@
         <nav class="navbar navbar-expand-lg bg-body-secondary">
 
             <div class="container-fluid">
-
                 <a class="navbar-brand" href="https://preguntados-dev-edition.vercel.app/">Preguntados: Dev Edition</a>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
                                 href="https://preguntados-dev-edition.vercel.app/">Hacer el quiz</a>
                         </li>
-
                     </ul>
-
                 </div>
-
             </div>
 
         </nav>
 
         <main class="container">
 
-            <div id="preguntaRespuestas">
-
-            </div>
+            <div id="preguntaRespuestas"></div>
 
             <button class="btn btn-info text-white" id="siguientePregunta"
-                onclick="obtenerUnaPregunta()">Siguiente</button>
+                onclick="obtenerUnaPregunta()" disabled>Siguiente</button>
 
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -58,9 +48,7 @@
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">¡Completaste el quiz!</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-
                         <div class="modal-body" id="modal"></div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info" data-bs-dismiss="modal"
                                 onclick="repetirQuiz()">Repetir
