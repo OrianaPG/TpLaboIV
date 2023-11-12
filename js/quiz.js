@@ -23,60 +23,60 @@ function agregarModal(puntuacionActual, cantidadPreguntas) {
 }
 
 function validarRespuesta(respuestaCorrecta, respuestaSeleccionada) {
-    let botonGuardado = document.getElementById(respuestaSeleccionada);
+    let botonSeleccionado = document.getElementById(respuestaSeleccionada);
     let respuestas = document.getElementsByClassName('respuestas');
     if (respuestaCorrecta === respuestaSeleccionada) {
         puntuacionActual++;
-        //! Cambiarle el color a la respuesta correcta (que es la seleccionada), pasar de btn-warning a btn-success
-        botonGuardado.classList.remove("btn-warning");
-        botonGuardado.classList.add("btn-success");
+        // Cambiamos el color a la respuesta correcta
+        botonSeleccionado.classList.remove("btn-warning");
+        botonSeleccionado.classList.add("btn-success");
     }
-    //! Cambiarle el color a la respuesta incorrecta (la seleccionada), pasar de btn-warning a btn-danger
     else {
-        botonGuardado.classList.remove("btn-warning");
-        botonGuardado.classList.add("btn-danger");
+        // Cambiamos el color a la respuesta incorrecta
+        botonSeleccionado.classList.remove("btn-warning");
+        botonSeleccionado.classList.add("btn-danger");
         let botonCorrecto = document.getElementById(respuestaCorrecta);
-        //! Cambiarle el color a la respuesta correcta, pasar de btn-warning a btn-success
+        // Cambiamos el color a la respuesta correcta
         botonCorrecto.classList.remove("btn-warning");
         botonCorrecto.classList.add("btn-success");
     }
-    //! A los otros botones agregarles el atributo disabled para que no puedan ser clickeados
-    for(var i = 0; i < respuestas.length; i++) {
+    // Desactivamos todos los botones de respuestas
+    for (let i = 0; i < respuestas.length; i++) {
         respuestas[i].disabled = true;
     }
-    //! Sacarle el atributo disabled al botón de Siguiente
+    // Activamos el botón "Siguiente"
     let botonSiguiente = document.getElementById("siguientePregunta");
     botonSiguiente.disabled = false;
 }
 
 async function levantarPreguntas(url) {
-    const respuesta = await fetch(url);
+    const respuesta = await fetch(url).catch(error => console.log("ERROR FATAL:", error));
     return respuesta.json();
 }
 
 async function obtenerPreguntas(ciclo) {
     preguntas = await levantarPreguntas(url);
-
-    console.log(preguntas);
 }
 
 function obtenerUnaPregunta() {
-    const pregunta = preguntas[ciclo];
-    preguntaRespuestas.innerHTML = `<h1>${pregunta.category.toUpperCase()}</h1>
-            <p>Puntuación: ${puntuacionActual} de ${cantidadPreguntas}</p>
-            <p>Pregunta: ${ciclo + 1} de ${cantidadPreguntas}</p>
-            <p class="bold">${pregunta.question}</p>`;
+    let botonSiguiente = document.getElementById("siguientePregunta");
+    botonSiguiente.disabled = true;
 
+    const pregunta = preguntas[ciclo];
+    preguntaRespuestas.innerHTML = `<h1 class="bold">${pregunta.category.toUpperCase()}</h1>
+    <p class="text-body-secondary">Puntuación: ${puntuacionActual} de ${cantidadPreguntas}</p>
+    <p class="text-body-secondary">Pregunta: ${ciclo + 1} de ${cantidadPreguntas}</p>
+    <p class="bold">${pregunta.question}</p>`;
+    
     // Cargamos la respuesta
     for (let [key, value] of Object.entries(pregunta.answers)) {
-        preguntaRespuestas.innerHTML += `<button class="btn btn-warning respuestas" onclick="validarRespuesta('${pregunta.correct_answer}', '${key}')" id="${key}">${value}</button>`;
+        preguntaRespuestas.innerHTML += `<button class="btn btn-warning mb-2 respuestas w-75" onclick="validarRespuesta('${pregunta.correct_answer}', '${key}')" id="${key}">${value}</button> <br>`;
     }
-
+    
     if (ciclo + 1 == cantidadPreguntas) {
         agregarModal(puntuacionActual, cantidadPreguntas);
     }
 
-    console.log(pregunta.question);
     ciclo++;
 }
 
@@ -94,13 +94,3 @@ function hacerPromesa() {
 
 obtenerPreguntas()
     .then(() => hacerPromesa());
-
-
-
-/*
-obtenerPreguntas(ciclo);
-
-setTimeout(() => {
-    obtenerUnaPregunta();
-}, 500);
-*/

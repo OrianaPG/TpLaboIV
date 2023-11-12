@@ -33,7 +33,7 @@ fetch(url)
     .then(respuesta => respuesta.json())
     .then(data => {
         let lenguajes = data.categories.map(lenguajes =>
-            `<button class="btn btn-primary lenguajes" name="lenguajes" id=${lenguajes.name} onclick="guardarLenguaje('${lenguajes.name}')" value=${lenguajes.name}>${lenguajes.name.toUpperCase()}</button>`
+            `<button class="btn btn-primary lenguajes mb-2 me-1" name="lenguajes" id=${lenguajes.name} onclick="guardarLenguaje('${lenguajes.name}')" value=${lenguajes.name}>${lenguajes.name.toUpperCase()}</button>`
         );
         containerlenguajes.innerHTML = lenguajes.join(" ");
     })
