@@ -24,11 +24,31 @@ function agregarModal(puntuacionActual, cantidadPreguntas) {
             Si querés volver a intentarlo con las mismas preguntas, dale a "Repetir quiz". Sino, dale a "Salir".`
 }
 
-function validarRespuesta(pregunta, respuestaSeleccionada) {
-    if (pregunta.correct_answer === respuestaSeleccionada) {
-        return true;
+function validarRespuesta(respuestaCorrecta, respuestaSeleccionada) {
+    let botonGuardado = document.getElementById(respuestaSeleccionada);
+    let respuestas = document.getElementsByClassName('respuestas');
+    if (respuestaCorrecta === respuestaSeleccionada) {
+        puntuacionActual++;
+        //! Cambiarle el color a la respuesta correcta (que es la seleccionada), pasar de btn-warning a btn-success
+        botonGuardado.classList.remove("btn-warning");
+        botonGuardado.classList.add("btn-success");
     }
-    return false;
+    //! Cambiarle el color a la respuesta incorrecta (la seleccionada), pasar de btn-warning a btn-danger
+    else {
+        botonGuardado.classList.remove("btn-warning");
+        botonGuardado.classList.add("btn-danger");
+        let botonCorrecto = document.getElementById(respuestaCorrecta);
+        //! Cambiarle el color a la respuesta correcta, pasar de btn-warning a btn-success
+        botonCorrecto.classList.remove("btn-warning");
+        botonCorrecto.classList.add("btn-success");
+    }
+    //! A los otros botones agregarles el atributo disabled para que no puedan ser clickeados
+    for(var i = 0; i < respuestas.length; i++) {
+        respuestas[i].disabled = true;
+    }
+    //! Sacarle el atributo disabled al botón de Siguiente
+    let botonSiguiente = document.getElementById("siguientePregunta");
+    botonSiguiente.disabled = false;
 }
 
 async function levantarPreguntas(url) {
@@ -51,22 +71,7 @@ function obtenerUnaPregunta() {
 
     // Cargamos la respuesta
     for (let [key, value] of Object.entries(pregunta.answers)) {
-        preguntaRespuestas.innerHTML += `<button class="btn btn-warning" id="${key}">${value}</button>`;
-    }
-
-    //! De alguna manera obtener la respuesta correcta (se me ocurre que con un event listener que guarde el id de la respuesta seleccionada)
-
-    if (validarRespuesta(pregunta, respuestaSeleccionada)) {
-        puntuacionActual++;
-        //! Cambiarle el color a la respuesta correcta (que es la seleccionada), pasar de btn-warning a btn-success
-        //! A los otros botones agregarles el atributo disabled para que no puedan ser clickeados
-        //! Sacarle el atributo disabled al botón de Siguiente
-    }
-    else {
-        //! Cambiarle el color a la respuesta correcta, pasar de btn-warning a btn-success
-        //! Cambiarle el color a la respuesta incorrecta (la seleccionada), pasar de btn-warning a btn-danger
-        //! A los otros botones agregarles el atributo disabled para que no puedan ser clickeados
-        //! Sacarle el atributo disabled al botón de Siguiente
+        preguntaRespuestas.innerHTML += `<button class="btn btn-warning respuestas" onclick="validarRespuesta('${pregunta.correct_answer}', '${key}')" id="${key}">${value}</button>`;
     }
 
     if (ciclo + 1 == cantidadPreguntas) {
@@ -89,7 +94,7 @@ function hacerPromesa() {
     return new Promise((obtenerPreguntas) => {
         setTimeout(() => {
             obtenerUnaPregunta();
-        }, 1500);
+        }, 100);
     });
 };
 
