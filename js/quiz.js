@@ -19,9 +19,7 @@ function agregarModal(puntuacionActual, cantidadPreguntas) {
     modal.innerHTML =
         `Tu puntuación final fue de <span class="bold">${puntuacionActual}/${cantidadPreguntas}</span>.
             <br>
-            ¡Muchas gracias por jugar!
-            <br>
-            Si querés volver a intentarlo con las mismas preguntas, dale a "Repetir quiz". Sino, dale a "Salir".`
+            ¡Muchas gracias por jugar!`
 }
 
 function validarRespuesta(respuestaCorrecta, respuestaSeleccionada) {
@@ -80,10 +78,6 @@ function obtenerUnaPregunta() {
 
     console.log(pregunta.question);
     ciclo++;
-}
-
-function repetirQuiz() {
-    //! Que te devuelva a la primera pregunta
 }
 
 function volverAlInicio() {
